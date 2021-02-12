@@ -54,9 +54,4 @@ public class CovidRestController {
 		return new JSONObject().put("Wert", calculateCovidNumber.getNewInfectionsLastDayJHU()).toString();
 	}
 
-	@GetMapping("/rWerth")
-	public String getWerth() {
-		return new JSONObject().put("Wert", calculateCovidNumber.getRWerthTotalGermanyRKI()).toString();
-	}
-
 }
