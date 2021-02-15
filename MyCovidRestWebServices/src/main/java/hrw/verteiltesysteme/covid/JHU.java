@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class JHU {
+	List<JhuDataSet>actualList= new ArrayList<>();
 	public List<JhuDataSet> getJHUCovidInfo() {
 		List<JhuDataSet>germanyInfoJHU= new ArrayList<>();
 		try {
@@ -26,11 +27,17 @@ public class JHU {
 					}
 				}
 			}
+			actualList=germanyInfoJHU;
+			updateList();
 			return germanyInfoJHU;
 		} catch (JSONException | IOException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	public void updateList() {
+		JhuDataSet jhuDataSet=actualList.get(actualList.size()-1);
+		System.out.println(jhuDataSet.getDate());
 	}
 	private JhuDataSet getJhuDataSet(String dayInfo) {
 		JhuDataSet jhuDataSet = new JhuDataSet();

@@ -35,7 +35,7 @@ public class RKI {
 		return countyList;
 
 	}
-
+	
 	private County getCounty(JSONObject countAttributesJsonObject) {
 		try {
 			County county = new County();
