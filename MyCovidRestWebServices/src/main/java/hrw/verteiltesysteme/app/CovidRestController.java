@@ -25,23 +25,24 @@ public class CovidRestController {
 	public String getAllInfos(@PathVariable("rWerth") int rWerth, @PathVariable("day") int day) {
 		loadCovidInfo();
 		JSONObject covindInfoJsonObj = new JSONObject();
-		covindInfoJsonObj.put("Date", calculateCovidNumber.getGermanyInfoJHU()
+		covindInfoJsonObj.put("date", calculateCovidNumber.getGermanyInfoJHU()
 				.get(calculateCovidNumber.getGermanyInfoJHU().size() - 1).getDate()).toString();
 
-		covindInfoJsonObj.put("rGermany", calculateCovidNumber.getRWerthTotalGermanyRKI()).toString();
+		covindInfoJsonObj.put("rWerthTotalGermany", calculateCovidNumber.getRWerthTotalGermanyRKI()).toString();
 
-		covindInfoJsonObj.put("totalTargetInfection", calculateCovidNumber.getTotalTargetInfectionRKI(rWerth)).toString();
+		covindInfoJsonObj.put("totalTargetInfection", calculateCovidNumber.getTotalTargetInfectionRKI(rWerth))
+				.toString();
 
-		covindInfoJsonObj.put("getTargetIncidencForR", calculateCovidNumber.getTargetIncidenceForRWerthRKI(50,
+		covindInfoJsonObj.put("targetIncidenceForRWert", calculateCovidNumber.getTargetIncidenceForRWerthRKI(50,
 				calculateCovidNumber.getTotalTargetInfectionRKI(50), 7)).toString();
 
-		covindInfoJsonObj.put("getAverageIncrease", calculateCovidNumber.getAverageIncreaseDayJHU(day)).toString();
+		covindInfoJsonObj.put("averageIncrease", calculateCovidNumber.getAverageIncreaseDayJHU(day)).toString();
 
-		covindInfoJsonObj.put("increaseLastDay", calculateCovidNumber.getIncreaseLasteDayJHU()).toString();
+		covindInfoJsonObj.put("percentInfection", calculateCovidNumber.getIncreaseLasteDayJHU()).toString();
 
 		covindInfoJsonObj.put("totalInfection", calculateCovidNumber.getTotalInfectionsJHU()).toString();
 
-		covindInfoJsonObj.put("newInfectionLastDay", calculateCovidNumber.getNewInfectionsLastDayJHU()).toString();
+		covindInfoJsonObj.put("newInfection24", calculateCovidNumber.getNewInfectionsLastDayJHU()).toString();
 
 		return covindInfoJsonObj.toString();
 	}
@@ -49,53 +50,78 @@ public class CovidRestController {
 	@GetMapping("/date")
 	public String getDate() {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getGermanyInfoJHU()
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getGermanyInfoJHU()
 				.get(calculateCovidNumber.getGermanyInfoJHU().size() - 1).getDate()).toString();
+		obj.put("info", "date").toString();
+		return obj.toString();
 	}
 
 	// RKI Anforderungen
 	@GetMapping("/rWerthTotalGermany")
 	public String getRWerthTotalGermany() {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getRWerthTotalGermanyRKI()).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getRWerthTotalGermanyRKI()).toString();
+		obj.put("info", "rWerthTotalGermany").toString();
+		return obj.toString();
+
 	}
 
 	@GetMapping("/totalTargetInfection/{rWerth}")
 	public String getTotalTargetInfection(@PathVariable("rWerth") int rWerth) {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getTotalTargetInfectionRKI(rWerth)).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getTotalTargetInfectionRKI(rWerth)).toString();
+		obj.put("info", "totalTargetInfection/" + rWerth).toString();
+		return obj.toString();
 	}
 
 	@GetMapping("/targetIncidenceForRWert/{rWerth}/{day}")
 	public String getTargetIncidenceForRWert(@PathVariable("rWerth") int rWerth, @PathVariable("day") int day) {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getTargetIncidenceForRWerthRKI(50,
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getTargetIncidenceForRWerthRKI(50,
 				calculateCovidNumber.getTotalTargetInfectionRKI(50), 7)).toString();
+		obj.put("info", "targetIncidenceForRWert/" + rWerth + "/" + day).toString();
+		return obj.toString();
 	}
 
 	// JHU Anforderungen
 	@GetMapping("/averageIncrease/{day}")
 	public String getAverageIncreaseDay(@PathVariable("day") int day) {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getAverageIncreaseDayJHU(day)).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getAverageIncreaseDayJHU(day)).toString();
+		obj.put("info", "averageIncrease/" + day).toString();
+		return obj.toString();
 	}
 
 	@GetMapping("/percentInfection")
 	public String getPercenteInfection() {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getIncreaseLasteDayJHU()).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getIncreaseLasteDayJHU()).toString();
+		obj.put("info", "percentInfection").toString();
+		return obj.toString();
 	}
 
 	@GetMapping("/totalInfection")
 	public String getTotalInfection() {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getTotalInfectionsJHU()).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getTotalInfectionsJHU()).toString();
+		obj.put("info", "totalInfection").toString();
+		return obj.toString();
 	}
 
 	@GetMapping("/newInfection24")
 	public String getNewInfection() {
 		loadCovidInfo();
-		return new JSONObject().put("Wert", calculateCovidNumber.getNewInfectionsLastDayJHU()).toString();
+		JSONObject obj = new JSONObject();
+		obj.put("value", calculateCovidNumber.getNewInfectionsLastDayJHU()).toString();
+		obj.put("info", "newInfection24").toString();
+		return obj.toString();
 	}
 
 }
